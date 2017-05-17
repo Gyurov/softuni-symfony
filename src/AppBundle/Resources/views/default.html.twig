@@ -1,0 +1,54 @@
+{# Extending base.html.twig #}
+{# extends ['layout.html', 'base_layout.html'] #}
+{% extends '::base.html.twig'  %}
+{# Overriding block named body #}
+{%  block body %}
+    {#Check for pageTitle#}
+    {% if pageTitle is defined and pageTitle is not null %}
+        <h1>{{ pageTitle }}</h1>
+    {% endif %}
+
+    {#Check for results#}
+    {% if results is defined and results is not null and results|length %}
+        <p>All results</p>
+        <ul>
+            {# Iterate over resuts and print #}
+            {% for item in results %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <p>All results without first</p>
+        <ul>
+            {#Iterate over resuts and print without first #}
+            {% for item in results %}
+                {% if not loop.first %}
+                    <li>{{ item }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <p>All results without last</p>
+        <ul>
+            {#Iterate over resuts and print without last #}
+            {% for item in results %}
+                {% if not loop.last %}
+                    <li>{{ item }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <p>Iterating over key value</p>
+        <ul>
+            {# Iterating over key value #}
+            {% for key, item in results %}
+                {% if not loop.last %}
+                    <li>{{ key }}  =>  {{ item }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <p>For loop with Twig</p>
+        {% for i in 0..10 %}
+            {{ i }}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    {% else %}
+        <p>There are no results!</p>
+    {% endif %}
+{% endblock %}
